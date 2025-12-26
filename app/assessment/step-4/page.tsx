@@ -2,13 +2,24 @@
 
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { 
-  ChevronLeft, 
+import {
+  ChevronLeft,
   ChevronRight,
   Cigarette,
   Wine,
@@ -16,7 +27,7 @@ import {
   CheckCircle2,
   Heart,
   ExternalLink,
-  Lightbulb
+  Lightbulb,
 } from "lucide-react";
 import { useAssessment } from "@/lib/assessment-context";
 import Link from "next/link";
@@ -26,7 +37,8 @@ export default function Step4Page() {
   const { data, needsLifestyleGuidance } = useAssessment();
 
   const guidance = needsLifestyleGuidance();
-  const hasAnyTrigger = guidance.tobacco || guidance.alcohol || guidance.activity;
+  const hasAnyTrigger =
+    guidance.tobacco || guidance.alcohol || guidance.activity;
 
   const handleNext = () => {
     router.push("/assessment/step-5");
@@ -36,7 +48,9 @@ export default function Step4Page() {
     <AppShell currentStep={4} totalSteps={6}>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Lifestyle guidance</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            Lifestyle guidance
+          </h1>
           <p className="text-sm text-slate-600 mt-1">
             Personalised tips based on your answers
           </p>
@@ -45,12 +59,13 @@ export default function Step4Page() {
         {/* Summary Card */}
         <Card className="bg-white border border-slate-200 shadow-sm">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold">Your focus areas</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              Your focus areas
+            </CardTitle>
             <CardDescription>
-              {hasAnyTrigger 
+              {hasAnyTrigger
                 ? "Based on your answers, here are areas where small changes can help"
-                : "You're on a good track! Here are tips to maintain your healthy habits"
-              }
+                : "You're on a good track! Here are tips to maintain your healthy habits"}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -96,7 +111,9 @@ export default function Step4Page() {
                     <CardTitle className="text-base font-semibold">
                       Support to reduce or stop tobacco
                     </CardTitle>
-                    <CardDescription>Small steps can make a big difference</CardDescription>
+                    <CardDescription>
+                      Small steps can make a big difference
+                    </CardDescription>
                   </div>
                 </div>
                 <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-200">
@@ -106,7 +123,9 @@ export default function Step4Page() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <p className="text-sm font-medium text-slate-900">Quick actions:</p>
+                <p className="text-sm font-medium text-slate-900">
+                  Quick actions:
+                </p>
                 <ul className="space-y-2 text-sm text-slate-700">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
@@ -133,8 +152,9 @@ export default function Step4Page() {
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-slate-600">
                     <p>
-                      Government tobacco cessation services are available through health 
-                      facilities. Ask at your nearest <strong>Janakeeya Arogya Kendram</strong>  about quit 
+                      Government tobacco cessation services are available
+                      through health facilities. Ask at your nearest{" "}
+                      <strong>Janakeeya Arogya Kendram</strong> about quit
                       programs and counseling support.
                     </p>
                   </AccordionContent>
@@ -157,7 +177,9 @@ export default function Step4Page() {
                     <CardTitle className="text-base font-semibold">
                       Support to reduce daily alcohol use
                     </CardTitle>
-                    <CardDescription>Reducing alcohol improves long-term health</CardDescription>
+                    <CardDescription>
+                      Reducing alcohol improves long-term health
+                    </CardDescription>
                   </div>
                 </div>
                 <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-200">
@@ -167,7 +189,9 @@ export default function Step4Page() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <p className="text-sm font-medium text-slate-900">Quick actions:</p>
+                <p className="text-sm font-medium text-slate-900">
+                  Quick actions:
+                </p>
                 <ul className="space-y-2 text-sm text-slate-700">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
@@ -190,8 +214,9 @@ export default function Step4Page() {
               <Alert className="bg-sky-50 border-sky-200">
                 <Lightbulb className="h-4 w-4 text-sky-600" />
                 <AlertDescription className="text-sky-800 text-sm">
-                  If you find it difficult to reduce on your own, professional support 
-                  is available. Speak with a healthcare provider about options.
+                  If you find it difficult to reduce on your own, professional
+                  support is available. Speak with a healthcare provider about
+                  options.
                 </AlertDescription>
               </Alert>
             </CardContent>
@@ -211,7 +236,9 @@ export default function Step4Page() {
                     <CardTitle className="text-base font-semibold">
                       Move more, safely
                     </CardTitle>
-                    <CardDescription>Build activity gradually for lasting change</CardDescription>
+                    <CardDescription>
+                      Build activity gradually for lasting change
+                    </CardDescription>
                   </div>
                 </div>
                 <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-200">
@@ -221,25 +248,33 @@ export default function Step4Page() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <p className="text-sm font-medium text-slate-900">Starter plan:</p>
+                <p className="text-sm font-medium text-slate-900">
+                  Starter plan:
+                </p>
                 <div className="space-y-2 text-sm text-slate-700">
                   <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
-                    <Badge variant="outline" className="text-xs">Week 1</Badge>
+                    <Badge variant="outline" className="text-xs">
+                      Week 1
+                    </Badge>
                     <span>10 minutes walking per day, 5 days/week</span>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
-                    <Badge variant="outline" className="text-xs">Week 2</Badge>
+                    <Badge variant="outline" className="text-xs">
+                      Week 2
+                    </Badge>
                     <span>15 minutes walking per day, 5 days/week</span>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
-                    <Badge variant="outline" className="text-xs">Week 3+</Badge>
+                    <Badge variant="outline" className="text-xs">
+                      Week 3+
+                    </Badge>
                     <span>Build toward 150 minutes/week total</span>
                   </div>
                 </div>
               </div>
               <div className="p-3 bg-emerald-50 rounded-lg">
                 <p className="text-sm text-emerald-800">
-                  <strong>Add strength:</strong> Try simple bodyweight exercises 
+                  <strong>Add strength:</strong> Try simple bodyweight exercises
                   (squats, wall push-ups) 2 days/week for added benefit.
                 </p>
               </div>
@@ -317,6 +352,3 @@ export default function Step4Page() {
     </AppShell>
   );
 }
-
-
-

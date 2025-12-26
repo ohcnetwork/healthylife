@@ -8,10 +8,10 @@ interface DisclaimerAlertProps {
   className?: string;
 }
 
-export function DisclaimerAlert({ 
-  variant = "default", 
+export function DisclaimerAlert({
+  variant = "default",
   title = "Important",
-  className 
+  className,
 }: DisclaimerAlertProps) {
   const isWarning = variant === "warning";
 
@@ -31,13 +31,10 @@ export function DisclaimerAlert({
       )}
       <AlertTitle className="font-semibold">{title}</AlertTitle>
       <AlertDescription className="text-sm">
-        This tool provides general risk information and is not a diagnosis. 
-        It does not provide treatment advice. If you have symptoms or concerns, 
+        This tool provides general risk information and is not a diagnosis. It
+        does not provide treatment advice. If you have symptoms or concerns,
         consult a doctor or visit your nearest health facility.
       </AlertDescription>
     </Alert>
   );
 }
-
-
-

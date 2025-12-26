@@ -3,13 +3,25 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ChevronLeft, ChevronRight, Info, AlertCircle } from "lucide-react";
 import { useAssessment, Gender, ActivityLevel } from "@/lib/assessment-context";
 import Link from "next/link";
@@ -20,7 +32,9 @@ export default function Step1Page() {
 
   const [age, setAge] = useState<string>(data.age?.toString() || "");
   const [gender, setGender] = useState<Gender | null>(data.gender);
-  const [activityLevel, setActivityLevel] = useState<ActivityLevel | null>(data.activityLevel);
+  const [activityLevel, setActivityLevel] = useState<ActivityLevel | null>(
+    data.activityLevel
+  );
   const [errors, setErrors] = useState<{ age?: string }>({});
   const [showUnderageAlert, setShowUnderageAlert] = useState(false);
 
@@ -64,7 +78,9 @@ export default function Step1Page() {
     <AppShell currentStep={1} totalSteps={6}>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">About you</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            About you
+          </h1>
           <p className="text-sm text-slate-600 mt-1">
             This helps us tailor your risk score and tips.
           </p>
@@ -72,8 +88,12 @@ export default function Step1Page() {
 
         <Card className="bg-white border border-slate-200 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Basic Information</CardTitle>
-            <CardDescription>All fields help us provide better guidance</CardDescription>
+            <CardTitle className="text-base font-semibold">
+              Basic Information
+            </CardTitle>
+            <CardDescription>
+              All fields help us provide better guidance
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Age */}
@@ -110,14 +130,17 @@ export default function Step1Page() {
                   {errors.age}
                 </p>
               )}
-              <p className="text-xs text-slate-500">Enter your age in full years.</p>
+              <p className="text-xs text-slate-500">
+                Enter your age in full years.
+              </p>
             </div>
 
             {showUnderageAlert && (
               <Alert className="bg-sky-50 border-sky-200">
                 <Info className="h-4 w-4 text-sky-600" />
                 <AlertDescription className="text-sm text-sky-800">
-                  This tool is designed for adults. You can continue, but results may be less relevant.
+                  This tool is designed for adults. You can continue, but
+                  results may be less relevant.
                 </AlertDescription>
               </Alert>
             )}
@@ -144,7 +167,9 @@ export default function Step1Page() {
                     }`}
                   >
                     <RadioGroupItem value={option.value} id={option.value} />
-                    <span className="text-sm text-slate-900">{option.label}</span>
+                    <span className="text-sm text-slate-900">
+                      {option.label}
+                    </span>
                   </label>
                 ))}
               </RadioGroup>
@@ -152,16 +177,32 @@ export default function Step1Page() {
 
             {/* Activity Level */}
             <div className="space-y-3">
-              <Label className="text-sm font-medium">Physical activity level</Label>
+              <Label className="text-sm font-medium">
+                Physical activity level
+              </Label>
               <RadioGroup
                 value={activityLevel || ""}
-                onValueChange={(value) => setActivityLevel(value as ActivityLevel)}
+                onValueChange={(value) =>
+                  setActivityLevel(value as ActivityLevel)
+                }
                 className="space-y-2"
               >
                 {[
-                  { value: "sedentary", label: "Sedentary", description: "Very little activity" },
-                  { value: "moderate", label: "Moderate", description: "Some activity, under 150 minutes/week" },
-                  { value: "adequate", label: "Adequate", description: "150 minutes/week or more" },
+                  {
+                    value: "sedentary",
+                    label: "Sedentary",
+                    description: "Very little activity",
+                  },
+                  {
+                    value: "moderate",
+                    label: "Moderate",
+                    description: "Some activity, under 150 minutes/week",
+                  },
+                  {
+                    value: "adequate",
+                    label: "Adequate",
+                    description: "150 minutes/week or more",
+                  },
                 ].map((option) => (
                   <label
                     key={option.value}
@@ -171,10 +212,18 @@ export default function Step1Page() {
                         : "border-slate-200 hover:bg-slate-50"
                     }`}
                   >
-                    <RadioGroupItem value={option.value} id={option.value} className="mt-0.5" />
+                    <RadioGroupItem
+                      value={option.value}
+                      id={option.value}
+                      className="mt-0.5"
+                    />
                     <div>
-                      <span className="text-sm font-medium text-slate-900">{option.label}</span>
-                      <p className="text-xs text-slate-500">{option.description}</p>
+                      <span className="text-sm font-medium text-slate-900">
+                        {option.label}
+                      </span>
+                      <p className="text-xs text-slate-500">
+                        {option.description}
+                      </p>
                     </div>
                   </label>
                 ))}
@@ -202,6 +251,3 @@ export default function Step1Page() {
     </AppShell>
   );
 }
-
-
-

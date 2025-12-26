@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Healthy Life Campaign - Health Risk Assessment",
-  description: "Check your health risks in 5 minutes. A free, private health risk assessment tool.",
+  description:
+    "Check your health risks in 5 minutes. A free, private health risk assessment tool.",
 };
 
 export default function RootLayout({
@@ -29,9 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-slate-50`}
       >
-        <AssessmentProvider>
-          {children}
-        </AssessmentProvider>
+        <AssessmentProvider>{children}</AssessmentProvider>
         <Toaster position="top-center" />
       </body>
     </html>

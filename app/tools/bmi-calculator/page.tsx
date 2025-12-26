@@ -213,10 +213,10 @@ export default function BMICalculatorPage() {
                 category.color === "emerald"
                   ? "border-emerald-200 bg-emerald-50"
                   : category.color === "amber"
-                  ? "border-amber-200 bg-amber-50"
-                  : category.color === "rose"
-                  ? "border-rose-200 bg-rose-50"
-                  : "border-sky-200 bg-sky-50"
+                    ? "border-amber-200 bg-amber-50"
+                    : category.color === "rose"
+                      ? "border-rose-200 bg-rose-50"
+                      : "border-sky-200 bg-sky-50"
               }`}
             >
               <CardContent className="pt-6">
@@ -264,10 +264,10 @@ export default function BMICalculatorPage() {
                           cat.color === "emerald"
                             ? "bg-emerald-500"
                             : cat.color === "amber"
-                            ? "bg-amber-500"
-                            : cat.color === "rose"
-                            ? "bg-rose-500"
-                            : "bg-sky-500"
+                              ? "bg-amber-500"
+                              : cat.color === "rose"
+                                ? "bg-rose-500"
+                                : "bg-sky-500"
                         }`}
                       />
                       <span className="text-sm text-slate-700">
@@ -278,8 +278,8 @@ export default function BMICalculatorPage() {
                       {i === 0
                         ? `< ${cat.max}`
                         : i === BMI_CATEGORIES.length - 1
-                        ? `≥ ${BMI_CATEGORIES[i - 1].max}`
-                        : `${BMI_CATEGORIES[i - 1].max} - ${cat.max - 0.1}`}
+                          ? `≥ ${BMI_CATEGORIES[i - 1].max}`
+                          : `${BMI_CATEGORIES[i - 1].max} - ${cat.max - 0.1}`}
                     </span>
                   </div>
                 ))}

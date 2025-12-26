@@ -2,28 +2,45 @@
 
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { DisclaimerAlert } from "@/components/disclaimer-alert";
 import { InterpretationRow } from "@/components/interpretation-row";
-import { 
+import {
   AlertTriangle,
   Building2,
   Download,
   RotateCcw,
   HelpCircle,
   HeartPulse,
-  Droplet
+  Droplet,
 } from "lucide-react";
-import { useAssessment, getBPStatus, getSugarStatus } from "@/lib/assessment-context";
+import {
+  useAssessment,
+  getBPStatus,
+  getSugarStatus,
+} from "@/lib/assessment-context";
 import Link from "next/link";
 
 export default function AdvisoryPage() {
   const router = useRouter();
-  const { data, resetAssessment, calculateBMI, getBMICategory } = useAssessment();
+  const { data, resetAssessment, calculateBMI, getBMICategory } =
+    useAssessment();
 
   const bmi = calculateBMI();
   const bmiCategory = bmi ? getBMICategory(bmi) : null;
@@ -76,25 +93,26 @@ It does not provide treatment advice.
             We recommend speaking to a doctor
           </AlertTitle>
           <AlertDescription className="text-rose-800 mt-2">
-            Your entered blood pressure or blood sugar is higher than normal. 
-            This tool can&apos;t interpret risk scores safely when these are high. 
-            Please consult a doctor at your nearest Family Health Centre for further evaluation.
+            Your entered blood pressure or blood sugar is higher than normal.
+            This tool can&apos;t interpret risk scores safely when these are
+            high. Please consult a doctor at your nearest Family Health Centre
+            for further evaluation.
           </AlertDescription>
         </Alert>
 
         {/* Measurements Summary */}
         <Card className="bg-white border border-slate-200">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold">Your measurements</CardTitle>
-            <CardDescription>What you entered in this assessment</CardDescription>
+            <CardTitle className="text-base font-semibold">
+              Your measurements
+            </CardTitle>
+            <CardDescription>
+              What you entered in this assessment
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {bmi && bmiCategory && (
-              <InterpretationRow
-                label="BMI"
-                value={bmi}
-                status={bmiCategory}
-              />
+              <InterpretationRow label="BMI" value={bmi} status={bmiCategory} />
             )}
 
             {data.bpEntered && (
@@ -119,7 +137,7 @@ It does not provide treatment advice.
 
         {/* Actions */}
         <div className="space-y-3">
-          <Button 
+          <Button
             className="w-full bg-emerald-600 hover:bg-emerald-700 text-white gap-2"
             size="lg"
           >
@@ -128,19 +146,15 @@ It does not provide treatment advice.
           </Button>
 
           <div className="grid grid-cols-2 gap-3">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="gap-2"
               onClick={handleDownload}
             >
               <Download className="w-4 h-4" />
               Download my measurements
             </Button>
-            <Button 
-              variant="outline" 
-              className="gap-2"
-              onClick={handleRestart}
-            >
+            <Button variant="outline" className="gap-2" onClick={handleRestart}>
               <RotateCcw className="w-4 h-4" />
               Restart assessment
             </Button>
@@ -161,22 +175,23 @@ It does not provide treatment advice.
             </DialogHeader>
             <div className="space-y-4 text-sm text-slate-700">
               <p>
-                When blood pressure or blood sugar readings are higher than normal, 
-                continuing with risk scoring could give misleading results.
+                When blood pressure or blood sugar readings are higher than
+                normal, continuing with risk scoring could give misleading
+                results.
               </p>
               <p>
-                <strong>For blood pressure:</strong> Readings of 140/90 mmHg or higher 
-                suggest you should speak with a healthcare provider about management 
-                and lifestyle changes.
+                <strong>For blood pressure:</strong> Readings of 140/90 mmHg or
+                higher suggest you should speak with a healthcare provider about
+                management and lifestyle changes.
               </p>
               <p>
-                <strong>For blood sugar:</strong> Elevated readings may indicate 
-                pre-diabetes or diabetes, which requires proper medical evaluation 
-                and testing.
+                <strong>For blood sugar:</strong> Elevated readings may indicate
+                pre-diabetes or diabetes, which requires proper medical
+                evaluation and testing.
               </p>
               <p>
-                This is why we recommend consulting a doctor before continuing with 
-                the general risk assessment.
+                This is why we recommend consulting a doctor before continuing
+                with the general risk assessment.
               </p>
             </div>
           </DialogContent>
@@ -189,6 +204,3 @@ It does not provide treatment advice.
     </AppShell>
   );
 }
-
-
-

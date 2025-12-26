@@ -27,13 +27,14 @@ export function InterpretationRow({
         <p className="text-sm text-slate-600">{label}</p>
         <p className="text-xl font-semibold tabular-nums text-slate-900">
           {value}
-          {unit && <span className="text-sm font-normal text-slate-500 ml-1">{unit}</span>}
+          {unit && (
+            <span className="text-sm font-normal text-slate-500 ml-1">
+              {unit}
+            </span>
+          )}
         </p>
       </div>
       <StatusBadge status={getStatusType(status.color)} label={status.label} />
     </div>
   );
 }
-
-
-

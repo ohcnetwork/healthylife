@@ -3,15 +3,35 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { StatusBadge, getStatusType } from "@/components/status-badge";
 import { InterpretationRow } from "@/components/interpretation-row";
 import { DisclaimerAlert } from "@/components/disclaimer-alert";
-import { 
+import {
   Download,
   RotateCcw,
   AlertTriangle,
@@ -26,11 +46,11 @@ import {
   ClipboardList,
   Stethoscope,
   FileText,
-  Loader2
+  Loader2,
 } from "lucide-react";
-import { 
-  useAssessment, 
-  getBPStatus, 
+import {
+  useAssessment,
+  getBPStatus,
   getSugarStatus,
 } from "@/lib/assessment-context";
 import { generateHealthPDF } from "@/lib/generate-pdf";
@@ -39,14 +59,14 @@ import { toast } from "sonner";
 export default function Step6Page() {
   const router = useRouter();
   const [isGenerating, setIsGenerating] = useState(false);
-  const { 
-    data, 
-    resetAssessment, 
-    calculateBMI, 
+  const {
+    data,
+    resetAssessment,
+    calculateBMI,
     getBMICategory,
     calculateCBACScore,
     hasAnyCancerSymptom,
-    needsLifestyleGuidance
+    needsLifestyleGuidance,
   } = useAssessment();
 
   const bmi = calculateBMI();
@@ -65,23 +85,33 @@ export default function Step6Page() {
     const advice: string[] = [];
 
     if (isHighCBACRisk) {
-      advice.push("Please visit the nearest Janakeeya Arogya Kendram for NCD risk evaluation.");
+      advice.push(
+        "Please visit the nearest Janakeeya Arogya Kendram for NCD risk evaluation."
+      );
     }
 
     if (hasCancerSymptoms) {
-      advice.push("Please consult a doctor for evaluation of reported symptoms.");
+      advice.push(
+        "Please consult a doctor for evaluation of reported symptoms."
+      );
     }
 
     if (guidance.tobacco) {
-      advice.push("Consider seeking tobacco cessation support; reducing tobacco lowers risk over time.");
+      advice.push(
+        "Consider seeking tobacco cessation support; reducing tobacco lowers risk over time."
+      );
     }
 
     if (guidance.alcohol) {
-      advice.push("Reducing daily alcohol can improve long-term health; consider support services if needed.");
+      advice.push(
+        "Reducing daily alcohol can improve long-term health; consider support services if needed."
+      );
     }
 
     if (guidance.activity) {
-      advice.push("Aim for at least 150 minutes/week of moderate activity, starting gradually.");
+      advice.push(
+        "Aim for at least 150 minutes/week of moderate activity, starting gradually."
+      );
     }
 
     return advice;
@@ -96,7 +126,7 @@ export default function Step6Page() {
         return [
           "Add nutrient-dense meals and snacks",
           "Include protein sources daily (eggs, dal, milk, fish)",
-          "Eat small, frequent meals"
+          "Eat small, frequent meals",
         ];
       case "Overweight":
       case "Obese":
@@ -104,13 +134,13 @@ export default function Step6Page() {
           "Reduce sugary drinks and processed foods",
           "Fill half your plate with vegetables",
           "Practice portion control",
-          "Choose whole grains over refined"
+          "Choose whole grains over refined",
         ];
       default:
         return [
           "Maintain balanced meals with variety",
           "Include fruits and vegetables daily",
-          "Stay hydrated with water"
+          "Stay hydrated with water",
         ];
     }
   }, [bmiCategory]);
@@ -122,7 +152,7 @@ export default function Step6Page() {
         "Choose whole grains over refined carbs",
         "Limit sweets and sugary drinks",
         "Don't skip meals; prefer steady meal timing",
-        "Consult a doctor for proper testing"
+        "Consult a doctor for proper testing",
       ];
     }
     return [];
@@ -135,19 +165,19 @@ export default function Step6Page() {
         return [
           "Start with 10 minutes/day walking",
           "Take short breaks from sitting every hour",
-          "Use stairs when possible"
+          "Use stairs when possible",
         ];
       case "moderate":
         return [
           "Add 1-2 longer walks per week",
           "Try to reach 150 minutes/week",
-          "Include variety (walking, cycling, swimming)"
+          "Include variety (walking, cycling, swimming)",
         ];
       case "adequate":
         return [
           "Maintain your current routine",
           "Add strength exercises twice weekly",
-          "Try new activities to stay motivated"
+          "Try new activities to stay motivated",
         ];
       default:
         return [];
@@ -163,8 +193,8 @@ export default function Step6Page() {
     setIsGenerating(true);
     try {
       // Small delay for UX
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       generateHealthPDF({
         data,
         bmi,
@@ -176,13 +206,13 @@ export default function Step6Page() {
         sugarTips,
         activityTips,
       });
-      
+
       toast.success("PDF downloaded successfully!", {
-        description: "Check your downloads folder"
+        description: "Check your downloads folder",
       });
     } catch (error) {
       toast.error("Failed to generate PDF", {
-        description: "Please try again"
+        description: "Please try again",
       });
     } finally {
       setIsGenerating(false);
@@ -200,7 +230,9 @@ export default function Step6Page() {
                 <Heart className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
-                <CardTitle className="text-xl font-bold">Your Summary</CardTitle>
+                <CardTitle className="text-xl font-bold">
+                  Your Summary
+                </CardTitle>
                 <CardDescription>
                   Assessment completed on {new Date().toLocaleDateString()}
                 </CardDescription>
@@ -217,15 +249,16 @@ export default function Step6Page() {
               We recommend consulting a doctor
             </AlertTitle>
             <AlertDescription className="text-amber-800">
-              <div>Based on your assessment, please visit the nearest <strong>Janakeeya Arogya Kendram</strong>  for further evaluation. or contact your ASHA for further assistance.</div>
+              <div>
+                Based on your assessment, please visit the nearest{" "}
+                <strong>Janakeeya Arogya Kendram</strong> for further
+                evaluation. or contact your ASHA for further assistance.
+              </div>
               <Button className="mt-3 bg-emerald-600 hover:bg-emerald-700 gap-2 w-full">
                 <Building2 className="w-4 h-4" />
-                <div>
-                  Find nearby JAK
-                </div>
+                <div>Find nearby JAK</div>
               </Button>
             </AlertDescription>
-            
           </Alert>
         )}
 
@@ -239,11 +272,7 @@ export default function Step6Page() {
           </CardHeader>
           <CardContent className="space-y-3">
             {bmi && bmiCategory && (
-              <InterpretationRow
-                label="BMI"
-                value={bmi}
-                status={bmiCategory}
-              />
+              <InterpretationRow label="BMI" value={bmi} status={bmiCategory} />
             )}
 
             <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-3">
@@ -253,8 +282,13 @@ export default function Step6Page() {
               </div>
               {data.bpEntered ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">{data.systolic}/{data.diastolic} mmHg</span>
-                  <StatusBadge status={getStatusType(bpStatus.color)} label={bpStatus.label} />
+                  <span className="text-sm font-medium">
+                    {data.systolic}/{data.diastolic} mmHg
+                  </span>
+                  <StatusBadge
+                    status={getStatusType(bpStatus.color)}
+                    label={bpStatus.label}
+                  />
                 </div>
               ) : (
                 <StatusBadge status="muted" label="Not entered" />
@@ -269,9 +303,13 @@ export default function Step6Page() {
               {data.sugarEntered ? (
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">
-                    {data.sugarValue} {data.sugarType === "hba1c" ? "%" : "mg/dL"}
+                    {data.sugarValue}{" "}
+                    {data.sugarType === "hba1c" ? "%" : "mg/dL"}
                   </span>
-                  <StatusBadge status={getStatusType(sugarStatus.color)} label={sugarStatus.label} />
+                  <StatusBadge
+                    status={getStatusType(sugarStatus.color)}
+                    label={sugarStatus.label}
+                  />
                 </div>
               ) : (
                 <StatusBadge status="muted" label="Not entered" />
@@ -292,19 +330,23 @@ export default function Step6Page() {
             <div className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
               <div>
                 <p className="text-sm text-slate-600">CBAC Score</p>
-                <p className="text-2xl font-semibold tabular-nums">{cbacScore}</p>
+                <p className="text-2xl font-semibold tabular-nums">
+                  {cbacScore}
+                </p>
               </div>
-              <StatusBadge 
-                status={isHighCBACRisk ? "elevated" : "normal"} 
-                label={isHighCBACRisk ? "Higher risk" : "Lower risk"} 
+              <StatusBadge
+                status={isHighCBACRisk ? "elevated" : "normal"}
+                label={isHighCBACRisk ? "Higher risk" : "Lower risk"}
               />
             </div>
 
             <div className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
-              <span className="text-sm text-slate-600">Cancer symptoms reported</span>
-              <StatusBadge 
-                status={hasCancerSymptoms ? "high" : "normal"} 
-                label={hasCancerSymptoms ? "Yes" : "No"} 
+              <span className="text-sm text-slate-600">
+                Cancer symptoms reported
+              </span>
+              <StatusBadge
+                status={hasCancerSymptoms ? "high" : "normal"}
+                label={hasCancerSymptoms ? "Yes" : "No"}
               />
             </div>
           </CardContent>
@@ -322,7 +364,10 @@ export default function Step6Page() {
             <CardContent>
               <ul className="space-y-2">
                 {keyAdvice.map((advice, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-slate-700">
+                  <li
+                    key={index}
+                    className="flex items-start gap-2 text-sm text-slate-700"
+                  >
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
                     {advice}
                   </li>
@@ -335,11 +380,16 @@ export default function Step6Page() {
         {/* Diet & Exercise Guidance */}
         <Card className="bg-white border border-slate-200">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold">Personalised Guidance</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              Personalised Guidance
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <Accordion type="multiple" className="space-y-2">
-              <AccordionItem value="diet" className="border border-slate-200 rounded-lg px-4">
+              <AccordionItem
+                value="diet"
+                className="border border-slate-200 rounded-lg px-4"
+              >
                 <AccordionTrigger className="py-3 hover:no-underline">
                   <div className="flex items-center gap-2">
                     <Utensils className="w-4 h-4 text-emerald-600" />
@@ -357,7 +407,9 @@ export default function Step6Page() {
                   </ul>
                   {sugarTips.length > 0 && (
                     <>
-                      <p className="text-sm font-medium text-slate-700 mt-4 mb-2">For blood sugar:</p>
+                      <p className="text-sm font-medium text-slate-700 mt-4 mb-2">
+                        For blood sugar:
+                      </p>
                       <ul className="space-y-2 text-sm text-slate-700">
                         {sugarTips.map((tip, index) => (
                           <li key={index} className="flex items-start gap-2">
@@ -371,7 +423,10 @@ export default function Step6Page() {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="exercise" className="border border-slate-200 rounded-lg px-4">
+              <AccordionItem
+                value="exercise"
+                className="border border-slate-200 rounded-lg px-4"
+              >
                 <AccordionTrigger className="py-3 hover:no-underline">
                   <div className="flex items-center gap-2">
                     <Activity className="w-4 h-4 text-emerald-600" />
@@ -399,7 +454,7 @@ export default function Step6Page() {
         <div className="space-y-3 pt-4">
           <Dialog>
             <DialogTrigger asChild>
-              <Button 
+              <Button
                 size="lg"
                 className="w-full bg-emerald-600 hover:bg-emerald-700 gap-2"
               >
@@ -414,12 +469,15 @@ export default function Step6Page() {
                   Download your summary
                 </DialogTitle>
                 <DialogDescription>
-                  Generate a beautifully formatted PDF with all your assessment results.
+                  Generate a beautifully formatted PDF with all your assessment
+                  results.
                 </DialogDescription>
               </DialogHeader>
               <div className="py-4 space-y-4">
                 <div className="bg-slate-50 rounded-lg p-4 space-y-2">
-                  <p className="text-sm font-medium text-slate-900">Your PDF will include:</p>
+                  <p className="text-sm font-medium text-slate-900">
+                    Your PDF will include:
+                  </p>
                   <ul className="text-sm text-slate-600 space-y-1">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />
@@ -442,7 +500,8 @@ export default function Step6Page() {
                 <Alert className="bg-emerald-50 border-emerald-200">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                   <AlertDescription className="text-emerald-800">
-                    The PDF will be saved on your device only. We don&apos;t store or see it.
+                    The PDF will be saved on your device only. We don&apos;t
+                    store or see it.
                   </AlertDescription>
                 </Alert>
               </div>
@@ -451,7 +510,7 @@ export default function Step6Page() {
                   <Button variant="outline">Cancel</Button>
                 </DialogClose>
                 <DialogClose asChild>
-                  <Button 
+                  <Button
                     className="bg-emerald-600 hover:bg-emerald-700 gap-2"
                     onClick={handleDownload}
                     disabled={isGenerating}
@@ -473,8 +532,8 @@ export default function Step6Page() {
             </DialogContent>
           </Dialog>
 
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="lg"
             className="w-full gap-2"
             onClick={handleRestart}

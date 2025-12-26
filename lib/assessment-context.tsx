@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 // Types
 export type Gender = "male" | "female" | "other";
@@ -73,10 +79,16 @@ interface AssessmentContextType {
   getBMICategory: (bmi: number) => { label: string; color: string };
   calculateCBACScore: () => number;
   hasAnyCancerSymptom: () => boolean;
-  needsLifestyleGuidance: () => { tobacco: boolean; alcohol: boolean; activity: boolean };
+  needsLifestyleGuidance: () => {
+    tobacco: boolean;
+    alcohol: boolean;
+    activity: boolean;
+  };
 }
 
-const AssessmentContext = createContext<AssessmentContextType | undefined>(undefined);
+const AssessmentContext = createContext<AssessmentContextType | undefined>(
+  undefined
+);
 
 // BMI Categories
 export const BMI_CATEGORIES = {
@@ -169,7 +181,8 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
 
     // Waist circumference
     const waist = data.waistCircumference;
-    const reference = data.waistReference || (data.gender === "male" ? "male" : "female");
+    const reference =
+      data.waistReference || (data.gender === "male" ? "male" : "female");
     if (waist) {
       const thresholds = WAIST_THRESHOLDS[reference];
       if (waist > thresholds.high) score += 2;
@@ -177,7 +190,10 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     }
 
     // Physical activity (from step 1)
-    if (data.activityLevel === "sedentary" || data.activityLevel === "moderate") {
+    if (
+      data.activityLevel === "sedentary" ||
+      data.activityLevel === "moderate"
+    ) {
       score += 1;
     }
 
@@ -228,32 +244,53 @@ export function useAssessment() {
 }
 
 // Helper to check if BP is elevated
-export function isBPElevated(systolic: number | null, diastolic: number | null): boolean {
+export function isBPElevated(
+  systolic: number | null,
+  diastolic: number | null
+): boolean {
   if (!systolic || !diastolic) return false;
-  return systolic >= BP_THRESHOLDS.systolicElevated || diastolic >= BP_THRESHOLDS.diastolicElevated;
+  return (
+    systolic >= BP_THRESHOLDS.systolicElevated ||
+    diastolic >= BP_THRESHOLDS.diastolicElevated
+  );
 }
 
 // Helper to check if sugar is elevated
-export function isSugarElevated(type: SugarType | null, value: number | null): boolean {
+export function isSugarElevated(
+  type: SugarType | null,
+  value: number | null
+): boolean {
   if (!type || !value) return false;
   const threshold = SUGAR_THRESHOLDS[type];
   return value >= threshold.elevated;
 }
 
 // Helper to get BP status
-export function getBPStatus(systolic: number | null, diastolic: number | null): { label: string; color: string } {
+export function getBPStatus(
+  systolic: number | null,
+  diastolic: number | null
+): { label: string; color: string } {
   if (!systolic || !diastolic) return { label: "Not entered", color: "slate" };
-  if (systolic >= BP_THRESHOLDS.systolicElevated || diastolic >= BP_THRESHOLDS.diastolicElevated) {
+  if (
+    systolic >= BP_THRESHOLDS.systolicElevated ||
+    diastolic >= BP_THRESHOLDS.diastolicElevated
+  ) {
     return { label: "Higher than normal", color: "rose" };
   }
-  if (systolic >= BP_THRESHOLDS.systolicNormal || diastolic >= BP_THRESHOLDS.diastolicNormal) {
+  if (
+    systolic >= BP_THRESHOLDS.systolicNormal ||
+    diastolic >= BP_THRESHOLDS.diastolicNormal
+  ) {
     return { label: "Elevated", color: "amber" };
   }
   return { label: "Normal", color: "emerald" };
 }
 
 // Helper to get sugar status
-export function getSugarStatus(type: SugarType | null, value: number | null): { label: string; color: string } {
+export function getSugarStatus(
+  type: SugarType | null,
+  value: number | null
+): { label: string; color: string } {
   if (!type || !value) return { label: "Not entered", color: "slate" };
   const threshold = SUGAR_THRESHOLDS[type];
   if (value >= threshold.elevated) {
@@ -264,6 +301,3 @@ export function getSugarStatus(type: SugarType | null, value: number | null): { 
   }
   return { label: "Normal", color: "emerald" };
 }
-
-
-

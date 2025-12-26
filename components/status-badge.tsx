@@ -34,7 +34,12 @@ const statusConfig = {
   },
 };
 
-export function StatusBadge({ status, label, showIcon = true, className }: StatusBadgeProps) {
+export function StatusBadge({
+  status,
+  label,
+  showIcon = true,
+  className,
+}: StatusBadgeProps) {
   const config = statusConfig[status];
   const Icon = config.Icon;
 
@@ -64,6 +69,3 @@ export function getStatusType(color: string): StatusType {
       return "muted";
   }
 }
-
-
-

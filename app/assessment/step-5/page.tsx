@@ -3,30 +3,47 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { StatusBadge } from "@/components/status-badge";
 import { DisclaimerAlert } from "@/components/disclaimer-alert";
-import { 
-  ChevronLeft, 
+import {
+  ChevronLeft,
   ChevronRight,
   AlertTriangle,
   CheckCircle2,
   Stethoscope,
-  Info
+  Info,
 } from "lucide-react";
 import { useAssessment } from "@/lib/assessment-context";
 import Link from "next/link";
 
 const GENERAL_SYMPTOMS = [
-  { id: "non_healing_ulcer", label: "Non-healing ulcer (wound that doesn't heal for more than 2 weeks)" },
+  {
+    id: "non_healing_ulcer",
+    label: "Non-healing ulcer (wound that doesn't heal for more than 2 weeks)",
+  },
   { id: "lumps", label: "Lumps or swellings anywhere in the body" },
   { id: "difficulty_swallowing", label: "Difficulty swallowing" },
-  { id: "voice_change", label: "Change in voice (hoarseness lasting more than 2 weeks)" },
+  {
+    id: "voice_change",
+    label: "Change in voice (hoarseness lasting more than 2 weeks)",
+  },
   { id: "weight_loss", label: "Unexplained weight loss" },
   { id: "blood_sputum", label: "Blood in sputum (coughed-up mucus)" },
   { id: "persistent_cough", label: "Persistent cough (more than 2 weeks)" },
@@ -34,7 +51,10 @@ const GENERAL_SYMPTOMS = [
 
 const WOMEN_SYMPTOMS = [
   { id: "breast_lump", label: "Lump in the breast" },
-  { id: "nipple_discharge", label: "Nipple discharge (other than breast milk)" },
+  {
+    id: "nipple_discharge",
+    label: "Nipple discharge (other than breast milk)",
+  },
   { id: "breast_shape", label: "Change in breast shape or size" },
   { id: "postmenopausal_bleeding", label: "Bleeding after menopause" },
   { id: "bleeding_intercourse", label: "Bleeding after intercourse" },
@@ -44,28 +64,28 @@ export default function Step5Page() {
   const router = useRouter();
   const { data, updateData } = useAssessment();
 
-  const [generalSymptoms, setGeneralSymptoms] = useState<Record<string, boolean>>(
-    data.generalSymptoms || {}
-  );
+  const [generalSymptoms, setGeneralSymptoms] = useState<
+    Record<string, boolean>
+  >(data.generalSymptoms || {});
   const [womenSymptoms, setWomenSymptoms] = useState<Record<string, boolean>>(
     data.womenSymptoms || {}
   );
 
   const showWomenSection = data.gender === "female";
 
-  const hasAnySymptom = 
-    Object.values(generalSymptoms).some(v => v) || 
-    Object.values(womenSymptoms).some(v => v);
+  const hasAnySymptom =
+    Object.values(generalSymptoms).some((v) => v) ||
+    Object.values(womenSymptoms).some((v) => v);
 
   const handleSymptomChange = (
-    id: string, 
-    value: boolean, 
+    id: string,
+    value: boolean,
     isWomen: boolean = false
   ) => {
     if (isWomen) {
-      setWomenSymptoms(prev => ({ ...prev, [id]: value }));
+      setWomenSymptoms((prev) => ({ ...prev, [id]: value }));
     } else {
-      setGeneralSymptoms(prev => ({ ...prev, [id]: value }));
+      setGeneralSymptoms((prev) => ({ ...prev, [id]: value }));
     }
   };
 
@@ -81,7 +101,9 @@ export default function Step5Page() {
     <AppShell currentStep={5} totalSteps={6}>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Cancer symptom check</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            Cancer symptom check
+          </h1>
           <p className="text-sm text-slate-600 mt-1">
             Early detection helps. Answer honestly — this is for your awareness.
           </p>
@@ -90,7 +112,9 @@ export default function Step5Page() {
         {/* General Symptoms */}
         <Card className="bg-white border border-slate-200 shadow-sm">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold">General symptoms</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              General symptoms
+            </CardTitle>
             <CardDescription>
               Have you experienced any of these in the past few months?
             </CardDescription>
@@ -105,8 +129,16 @@ export default function Step5Page() {
                   {symptom.label}
                 </Label>
                 <RadioGroup
-                  value={generalSymptoms[symptom.id] === true ? "yes" : generalSymptoms[symptom.id] === false ? "no" : ""}
-                  onValueChange={(v) => handleSymptomChange(symptom.id, v === "yes")}
+                  value={
+                    generalSymptoms[symptom.id] === true
+                      ? "yes"
+                      : generalSymptoms[symptom.id] === false
+                        ? "no"
+                        : ""
+                  }
+                  onValueChange={(v) =>
+                    handleSymptomChange(symptom.id, v === "yes")
+                  }
                   className="flex gap-2"
                 >
                   <label
@@ -139,10 +171,10 @@ export default function Step5Page() {
         {showWomenSection && (
           <Card className="bg-white border border-slate-200 shadow-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base font-semibold">Women-specific symptoms</CardTitle>
-              <CardDescription>
-                Additional symptoms to check
-              </CardDescription>
+              <CardTitle className="text-base font-semibold">
+                Women-specific symptoms
+              </CardTitle>
+              <CardDescription>Additional symptoms to check</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               {WOMEN_SYMPTOMS.map((symptom) => (
@@ -154,8 +186,16 @@ export default function Step5Page() {
                     {symptom.label}
                   </Label>
                   <RadioGroup
-                    value={womenSymptoms[symptom.id] === true ? "yes" : womenSymptoms[symptom.id] === false ? "no" : ""}
-                    onValueChange={(v) => handleSymptomChange(symptom.id, v === "yes", true)}
+                    value={
+                      womenSymptoms[symptom.id] === true
+                        ? "yes"
+                        : womenSymptoms[symptom.id] === false
+                          ? "no"
+                          : ""
+                    }
+                    onValueChange={(v) =>
+                      handleSymptomChange(symptom.id, v === "yes", true)
+                    }
                     className="flex gap-2"
                   >
                     <label
@@ -189,11 +229,13 @@ export default function Step5Page() {
         {hasAnySymptom ? (
           <Alert className="bg-rose-50 border-rose-200">
             <AlertTriangle className="h-4 w-4 text-rose-600" />
-            <AlertTitle className="text-rose-900 font-semibold">Please consult a doctor</AlertTitle>
+            <AlertTitle className="text-rose-900 font-semibold">
+              Please consult a doctor
+            </AlertTitle>
             <AlertDescription className="text-rose-800">
-              You reported one or more symptoms that need medical evaluation. 
-              Please consult a doctor at the nearest health facility for further evaluation. 
-              Early detection can make a significant difference.
+              You reported one or more symptoms that need medical evaluation.
+              Please consult a doctor at the nearest health facility for further
+              evaluation. Early detection can make a significant difference.
             </AlertDescription>
           </Alert>
         ) : (
@@ -202,10 +244,12 @@ export default function Step5Page() {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-emerald-900">No symptoms reported</p>
+                  <p className="font-semibold text-emerald-900">
+                    No symptoms reported
+                  </p>
                   <p className="text-sm text-emerald-800 mt-1">
-                    Consider routine screening once every 5 years. If you notice new 
-                    symptoms later, consult a health facility promptly.
+                    Consider routine screening once every 5 years. If you notice
+                    new symptoms later, consult a health facility promptly.
                   </p>
                 </div>
               </div>
@@ -215,7 +259,11 @@ export default function Step5Page() {
 
         {/* Self-breast exam info for women */}
         {showWomenSection && !hasAnySymptom && (
-          <Accordion type="single" collapsible className="bg-white border border-slate-200 rounded-lg">
+          <Accordion
+            type="single"
+            collapsible
+            className="bg-white border border-slate-200 rounded-lg"
+          >
             <AccordionItem value="breast-exam" className="border-0">
               <AccordionTrigger className="px-4 py-3 text-sm font-medium text-slate-900 hover:no-underline">
                 <div className="flex items-center gap-2">
@@ -225,21 +273,40 @@ export default function Step5Page() {
               </AccordionTrigger>
               <AccordionContent className="px-4 pb-4 text-sm text-slate-700">
                 <div className="space-y-3">
-                  <p className="font-medium">How to perform a self-breast examination:</p>
+                  <p className="font-medium">
+                    How to perform a self-breast examination:
+                  </p>
                   <ol className="list-decimal list-inside space-y-2">
-                    <li>Stand in front of a mirror with shoulders straight and arms on hips</li>
-                    <li>Look for any changes in size, shape, or color of breasts</li>
+                    <li>
+                      Stand in front of a mirror with shoulders straight and
+                      arms on hips
+                    </li>
+                    <li>
+                      Look for any changes in size, shape, or color of breasts
+                    </li>
                     <li>Raise your arms and look for the same changes</li>
-                    <li>While lying down, use your right hand to feel your left breast and vice versa</li>
-                    <li>Use firm, smooth touches with finger pads in circular motions</li>
-                    <li>Cover the entire breast from top to bottom, side to side</li>
-                    <li>Feel your breasts while standing or sitting, such as in the shower</li>
+                    <li>
+                      While lying down, use your right hand to feel your left
+                      breast and vice versa
+                    </li>
+                    <li>
+                      Use firm, smooth touches with finger pads in circular
+                      motions
+                    </li>
+                    <li>
+                      Cover the entire breast from top to bottom, side to side
+                    </li>
+                    <li>
+                      Feel your breasts while standing or sitting, such as in
+                      the shower
+                    </li>
                   </ol>
                   <Alert className="bg-sky-50 border-sky-200 mt-4">
                     <Info className="h-4 w-4 text-sky-600" />
                     <AlertDescription className="text-sky-800 text-sm">
-                      Seek help if you find a new lump, thickening, or any change. 
-                      Monthly self-exams help you know what&apos;s normal for your body.
+                      Seek help if you find a new lump, thickening, or any
+                      change. Monthly self-exams help you know what&apos;s
+                      normal for your body.
                     </AlertDescription>
                   </Alert>
                 </div>
@@ -270,6 +337,3 @@ export default function Step5Page() {
     </AppShell>
   );
 }
-
-
-
