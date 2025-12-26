@@ -20,14 +20,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { StatusBadge } from "@/components/status-badge";
 import { DisclaimerAlert } from "@/components/disclaimer-alert";
 import {
   ChevronLeft,
   ChevronRight,
   AlertTriangle,
   CheckCircle2,
-  Stethoscope,
   Info,
 } from "lucide-react";
 import { useAssessment } from "@/lib/assessment-context";
@@ -94,11 +92,11 @@ export default function Step5Page() {
       generalSymptoms,
       womenSymptoms,
     });
-    router.push("/assessment/step-6");
+    router.push("/assessment/step-4");
   };
 
   return (
-    <AppShell currentStep={5} totalSteps={6}>
+    <AppShell currentStep={5} totalSteps={5}>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">

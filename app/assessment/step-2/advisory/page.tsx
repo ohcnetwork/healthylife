@@ -27,15 +27,12 @@ import {
   Download,
   RotateCcw,
   HelpCircle,
-  HeartPulse,
-  Droplet,
 } from "lucide-react";
 import {
   useAssessment,
   getBPStatus,
   getSugarStatus,
 } from "@/lib/assessment-context";
-import Link from "next/link";
 
 export default function AdvisoryPage() {
   const router = useRouter();

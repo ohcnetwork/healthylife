@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -22,21 +21,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
 import { StatusBadge, getStatusType } from "@/components/status-badge";
 import {
   ChevronLeft,
   ChevronRight,
-  Info,
-  AlertCircle,
   AlertTriangle,
   Scale,
-  Ruler,
   HeartPulse,
   Droplet,
   CheckCircle2,
@@ -54,7 +44,7 @@ import Link from "next/link";
 
 export default function Step2Page() {
   const router = useRouter();
-  const { data, updateData, calculateBMI, getBMICategory } = useAssessment();
+  const { data, updateData, getBMICategory } = useAssessment();
 
   // Form state
   const [height, setHeight] = useState<string>(data.height?.toString() || "");

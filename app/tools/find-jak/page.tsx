@@ -14,7 +14,6 @@ import {
   Heart,
   ChevronLeft,
   Building2,
-  MapPin,
   Search,
   Clock,
   Phone,

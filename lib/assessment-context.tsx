@@ -37,6 +37,10 @@ export interface AssessmentData {
   waistReference: WaistReference | null;
   familyHistory: boolean | null;
 
+  // Step 5: Cancer Symptom Screening
+  generalSymptoms: Record<string, boolean>;
+  womenSymptoms: Record<string, boolean>;
+
   // Computed flags
   bpEntered: boolean;
   sugarEntered: boolean;
@@ -59,6 +63,8 @@ const initialData: AssessmentData = {
   waistCircumference: null,
   waistReference: null,
   familyHistory: null,
+  generalSymptoms: {},
+  womenSymptoms: {},
   bpEntered: false,
   sugarEntered: false,
   bpElevated: false,

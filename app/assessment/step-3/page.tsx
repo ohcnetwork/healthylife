@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -35,7 +34,6 @@ import { DisclaimerAlert } from "@/components/disclaimer-alert";
 import {
   ChevronLeft,
   ChevronRight,
-  Info,
   AlertTriangle,
   Cigarette,
   Wine,
@@ -54,7 +52,7 @@ import Link from "next/link";
 
 export default function Step3Page() {
   const router = useRouter();
-  const { data, updateData, calculateCBACScore } = useAssessment();
+  const { data, updateData } = useAssessment();
 
   const [tobaccoUse, setTobaccoUse] = useState<TobaccoUse | null>(
     data.tobaccoUse
