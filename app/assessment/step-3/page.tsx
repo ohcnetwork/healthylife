@@ -101,7 +101,7 @@ export default function Step3Page() {
   const waistThreshold = waistReference ? WAIST_THRESHOLDS[waistReference] : null;
 
   return (
-    <AppShell currentStep={3} totalSteps={6}>
+    <AppShell currentStep={3} totalSteps={4}>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">NCD Risk Check</h1>
@@ -353,6 +353,4 @@ export default function Step3Page() {
     </AppShell>
   );
 }
-
-
 

@@ -21,7 +21,9 @@ import {
   Scale,
   Ruler,
   HeartPulse,
-  Droplet
+  Droplet,
+  CheckCircle2,
+  X
 } from "lucide-react";
 import { 
   useAssessment, 
@@ -46,6 +48,8 @@ export default function Step2Page() {
   const [sugarValue, setSugarValue] = useState<string>(data.sugarValue?.toString() || "");
   
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [bpSkipped, setBpSkipped] = useState(false);
+  const [sugarSkipped, setSugarSkipped] = useState(false);
 
   // Computed BMI
   const bmi = useMemo(() => {
@@ -151,15 +155,25 @@ export default function Step2Page() {
   const clearBP = () => {
     setSystolic("");
     setDiastolic("");
+    setBpSkipped(true);
+  };
+
+  const enableBP = () => {
+    setBpSkipped(false);
   };
 
   const clearSugar = () => {
     setSugarType(null);
     setSugarValue("");
+    setSugarSkipped(true);
+  };
+
+  const enableSugar = () => {
+    setSugarSkipped(false);
   };
 
   return (
-    <AppShell currentStep={2} totalSteps={6}>
+    <AppShell currentStep={2} totalSteps={4}>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">Body measurements & vitals</h1>
@@ -230,11 +244,11 @@ export default function Step2Page() {
         </Card>
 
         {/* Card 2: Blood Pressure */}
-        <Card className="bg-white border border-slate-200 shadow-sm">
+        <Card className={`bg-white border shadow-sm ${bpSkipped ? "border-slate-300 bg-slate-50" : "border-slate-200"}`}>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <HeartPulse className="w-5 h-5 text-emerald-600" />
+                <HeartPulse className={`w-5 h-5 ${bpSkipped ? "text-slate-400" : "text-emerald-600"}`} />
                 Blood pressure
               </CardTitle>
               <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">Optional</span>
@@ -242,66 +256,88 @@ export default function Step2Page() {
             <CardDescription>If you know your recent BP reading</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="systolic">Systolic (mmHg)</Label>
-                <Input
-                  id="systolic"
-                  type="number"
-                  inputMode="numeric"
-                  placeholder="e.g., 120"
-                  value={systolic}
-                  onChange={(e) => setSystolic(e.target.value)}
-                  className={errors.systolic ? "border-rose-500" : ""}
-                />
-                {errors.systolic && (
-                  <p className="text-xs text-rose-600">{errors.systolic}</p>
-                )}
+            {bpSkipped ? (
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-slate-500" />
+                    <span className="text-sm text-slate-600">Skipped — will continue without BP</span>
+                  </div>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={enableBP}
+                    className="text-emerald-600 hover:text-emerald-700 gap-1"
+                  >
+                    <X className="w-3 h-3" />
+                    Enter BP
+                  </Button>
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="diastolic">Diastolic (mmHg)</Label>
-                <Input
-                  id="diastolic"
-                  type="number"
-                  inputMode="numeric"
-                  placeholder="e.g., 80"
-                  value={diastolic}
-                  onChange={(e) => setDiastolic(e.target.value)}
-                  className={errors.diastolic ? "border-rose-500" : ""}
-                />
-                {errors.diastolic && (
-                  <p className="text-xs text-rose-600">{errors.diastolic}</p>
-                )}
-              </div>
-            </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="systolic">Systolic (mmHg)</Label>
+                    <Input
+                      id="systolic"
+                      type="number"
+                      inputMode="numeric"
+                      placeholder="e.g., 120"
+                      value={systolic}
+                      onChange={(e) => setSystolic(e.target.value)}
+                      className={errors.systolic ? "border-rose-500" : ""}
+                    />
+                    {errors.systolic && (
+                      <p className="text-xs text-rose-600">{errors.systolic}</p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="diastolic">Diastolic (mmHg)</Label>
+                    <Input
+                      id="diastolic"
+                      type="number"
+                      inputMode="numeric"
+                      placeholder="e.g., 80"
+                      value={diastolic}
+                      onChange={(e) => setDiastolic(e.target.value)}
+                      className={errors.diastolic ? "border-rose-500" : ""}
+                    />
+                    {errors.diastolic && (
+                      <p className="text-xs text-rose-600">{errors.diastolic}</p>
+                    )}
+                  </div>
+                </div>
 
-            {bpStatus && (
-              <div className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
-                <span className="text-sm text-slate-700">Your BP reading</span>
-                <StatusBadge 
-                  status={getStatusType(bpStatus.color)} 
-                  label={bpStatus.label} 
-                />
-              </div>
+                {bpStatus && (
+                  <div className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
+                    <span className="text-sm text-slate-700">Your BP reading</span>
+                    <StatusBadge 
+                      status={getStatusType(bpStatus.color)} 
+                      label={bpStatus.label} 
+                    />
+                  </div>
+                )}
+
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={clearBP}
+                  className="text-slate-600 border-slate-300"
+                >
+                  I don&apos;t know my BP
+                </Button>
+              </>
             )}
-
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={clearBP}
-              className="text-slate-600"
-            >
-              I don&apos;t know my BP
-            </Button>
           </CardContent>
         </Card>
 
         {/* Card 3: Blood Sugar */}
-        <Card className="bg-white border border-slate-200 shadow-sm">
+        <Card className={`bg-white border shadow-sm ${sugarSkipped ? "border-slate-300 bg-slate-50" : "border-slate-200"}`}>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Droplet className="w-5 h-5 text-emerald-600" />
+                <Droplet className={`w-5 h-5 ${sugarSkipped ? "text-slate-400" : "text-emerald-600"}`} />
                 Blood sugar
               </CardTitle>
               <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">Optional</span>
@@ -309,59 +345,81 @@ export default function Step2Page() {
             <CardDescription>If you know your recent blood sugar reading</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label>Test type</Label>
-              <Select value={sugarType || ""} onValueChange={(v) => setSugarType(v as SugarType)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select test type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="rbs">Random Blood Sugar (RBS)</SelectItem>
-                  <SelectItem value="fbs">Fasting Blood Sugar (FBS)</SelectItem>
-                  <SelectItem value="ppbs">Post-Prandial Blood Sugar (PPBS)</SelectItem>
-                  <SelectItem value="hba1c">HbA1c</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {sugarSkipped ? (
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-slate-500" />
+                    <span className="text-sm text-slate-600">Skipped — will continue without blood sugar</span>
+                  </div>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={enableSugar}
+                    className="text-emerald-600 hover:text-emerald-700 gap-1"
+                  >
+                    <X className="w-3 h-3" />
+                    Enter value
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <Label>Test type</Label>
+                  <Select value={sugarType || ""} onValueChange={(v) => setSugarType(v as SugarType)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select test type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="rbs">Random Blood Sugar (RBS)</SelectItem>
+                      <SelectItem value="fbs">Fasting Blood Sugar (FBS)</SelectItem>
+                      <SelectItem value="ppbs">Post-Prandial Blood Sugar (PPBS)</SelectItem>
+                      <SelectItem value="hba1c">HbA1c</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-            {sugarType && (
-              <div className="space-y-2">
-                <Label htmlFor="sugarValue">
-                  Value ({sugarType === "hba1c" ? "%" : "mg/dL"})
-                </Label>
-                <Input
-                  id="sugarValue"
-                  type="number"
-                  inputMode="decimal"
-                  placeholder={sugarType === "hba1c" ? "e.g., 5.7" : "e.g., 100"}
-                  value={sugarValue}
-                  onChange={(e) => setSugarValue(e.target.value)}
-                  className={errors.sugarValue ? "border-rose-500" : ""}
-                />
-                {errors.sugarValue && (
-                  <p className="text-xs text-rose-600">{errors.sugarValue}</p>
+                {sugarType && (
+                  <div className="space-y-2">
+                    <Label htmlFor="sugarValue">
+                      Value ({sugarType === "hba1c" ? "%" : "mg/dL"})
+                    </Label>
+                    <Input
+                      id="sugarValue"
+                      type="number"
+                      inputMode="decimal"
+                      placeholder={sugarType === "hba1c" ? "e.g., 5.7" : "e.g., 100"}
+                      value={sugarValue}
+                      onChange={(e) => setSugarValue(e.target.value)}
+                      className={errors.sugarValue ? "border-rose-500" : ""}
+                    />
+                    {errors.sugarValue && (
+                      <p className="text-xs text-rose-600">{errors.sugarValue}</p>
+                    )}
+                  </div>
                 )}
-              </div>
-            )}
 
-            {sugarStatus && (
-              <div className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
-                <span className="text-sm text-slate-700">Your blood sugar</span>
-                <StatusBadge 
-                  status={getStatusType(sugarStatus.color)} 
-                  label={sugarStatus.label} 
-                />
-              </div>
-            )}
+                {sugarStatus && (
+                  <div className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
+                    <span className="text-sm text-slate-700">Your blood sugar</span>
+                    <StatusBadge 
+                      status={getStatusType(sugarStatus.color)} 
+                      label={sugarStatus.label} 
+                    />
+                  </div>
+                )}
 
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={clearSugar}
-              className="text-slate-600"
-            >
-              I don&apos;t know my blood sugar
-            </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={clearSugar}
+                  className="text-slate-600 border-slate-300"
+                >
+                  I don&apos;t know my blood sugar
+                </Button>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -398,6 +456,4 @@ export default function Step2Page() {
     </AppShell>
   );
 }
-
-
 

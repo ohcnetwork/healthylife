@@ -31,10 +31,6 @@ export interface AssessmentData {
   waistReference: WaistReference | null;
   familyHistory: boolean | null;
 
-  // Step 5: Cancer Symptoms
-  generalSymptoms: Record<string, boolean>;
-  womenSymptoms: Record<string, boolean>;
-
   // Computed flags
   bpEntered: boolean;
   sugarEntered: boolean;
@@ -57,8 +53,6 @@ const initialData: AssessmentData = {
   waistCircumference: null,
   waistReference: null,
   familyHistory: null,
-  generalSymptoms: {},
-  womenSymptoms: {},
   bpEntered: false,
   sugarEntered: false,
   bpElevated: false,
@@ -72,7 +66,6 @@ interface AssessmentContextType {
   calculateBMI: () => number | null;
   getBMICategory: (bmi: number) => { label: string; color: string };
   calculateCBACScore: () => number;
-  hasAnyCancerSymptom: () => boolean;
   needsLifestyleGuidance: () => { tobacco: boolean; alcohol: boolean; activity: boolean };
 }
 
@@ -187,12 +180,6 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
     return score;
   };
 
-  const hasAnyCancerSymptom = (): boolean => {
-    const generalYes = Object.values(data.generalSymptoms).some((v) => v);
-    const womenYes = Object.values(data.womenSymptoms).some((v) => v);
-    return generalYes || womenYes;
-  };
-
   const needsLifestyleGuidance = () => {
     return {
       tobacco: data.tobaccoUse !== null && data.tobaccoUse !== "never",
@@ -210,7 +197,6 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
         calculateBMI,
         getBMICategory,
         calculateCBACScore,
-        hasAnyCancerSymptom,
         needsLifestyleGuidance,
       }}
     >

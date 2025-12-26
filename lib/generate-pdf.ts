@@ -6,7 +6,6 @@ interface PDFData {
   bmi: number | null;
   bmiCategory: { label: string; color: string } | null;
   cbacScore: number;
-  hasCancerSymptoms: boolean;
   keyAdvice: string[];
   dietTips: string[];
   sugarTips: string[];
@@ -18,7 +17,6 @@ export function generateHealthPDF({
   bmi,
   bmiCategory,
   cbacScore,
-  hasCancerSymptoms,
   keyAdvice,
   dietTips,
   sugarTips,
@@ -163,19 +161,6 @@ export function generateHealthPDF({
     });
   };
 
-  const addParagraph = (text: string) => {
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(9);
-    doc.setTextColor(slate600[0], slate600[1], slate600[2]);
-    const lines = doc.splitTextToSize(text, contentWidth - 8);
-    if (y + lines.length * 4 > 280) {
-      doc.addPage();
-      y = 20;
-    }
-    doc.text(lines, margin + 4, y);
-    y += lines.length * 4 + 4;
-  };
-
   // Generate PDF content
   addHeader();
 
@@ -217,13 +202,6 @@ export function generateHealthPDF({
   const cbacRisk = cbacScore > 4 ? "Higher risk" : "Lower risk";
   const cbacColor = cbacScore > 4 ? "amber" : "emerald";
   addMetricRow("CBAC Score", cbacScore.toString(), cbacRisk, cbacColor);
-  
-  addMetricRow(
-    "Cancer Symptoms",
-    hasCancerSymptoms ? "Reported" : "None reported",
-    hasCancerSymptoms ? "Check needed" : "Clear",
-    hasCancerSymptoms ? "rose" : "emerald"
-  );
 
   y += 8;
 

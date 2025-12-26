@@ -18,7 +18,10 @@ import {
   HeartPulse,
   Droplet,
   Users,
-  ArrowRight
+  ArrowRight,
+  Ribbon,
+  IdCard,
+  Building2
 } from "lucide-react";
 import { useAssessment } from "@/lib/assessment-context";
 
@@ -193,6 +196,66 @@ export default function LandingPage() {
                 </CardContent>
               </Card>
             </Link>
+
+            {/* Cancer Screening */}
+            <Link href="/tools/cancer-screening" className="group">
+              <Card className="h-full bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 hover:-translate-y-1">
+                <CardHeader>
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center mb-4 shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
+                    <Ribbon className="w-7 h-7 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-slate-900">Cancer Symptom Check</CardTitle>
+                  <CardDescription className="text-slate-600">
+                    Screen for early warning signs. Early detection saves lives.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center text-purple-700 font-medium group-hover:gap-2 transition-all">
+                    Check now <ChevronRight className="w-4 h-4 ml-1" />
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* UHID Registration */}
+            <Link href="/tools/uhid-registration" className="group">
+              <Card className="h-full bg-gradient-to-br from-sky-50 to-blue-50 border-sky-200 hover:shadow-lg hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1">
+                <CardHeader>
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center mb-4 shadow-lg shadow-sky-500/30 group-hover:scale-110 transition-transform">
+                    <IdCard className="w-7 h-7 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-slate-900">Generate UHID</CardTitle>
+                  <CardDescription className="text-slate-600">
+                    Get your Unique Health ID for Kerala&apos;s digital health system.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center text-sky-700 font-medium group-hover:gap-2 transition-all">
+                    Get started <ChevronRight className="w-4 h-4 ml-1" />
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* Find JAK */}
+            <Link href="/tools/find-jak" className="group">
+              <Card className="h-full bg-gradient-to-br from-teal-50 to-cyan-50 border-teal-200 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 hover:-translate-y-1">
+                <CardHeader>
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center mb-4 shadow-lg shadow-teal-500/30 group-hover:scale-110 transition-transform">
+                    <Building2 className="w-7 h-7 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-slate-900">Find JAK</CardTitle>
+                  <CardDescription className="text-slate-600">
+                    Locate your nearest Janakeeya Arogya Kendram health centre.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center text-teal-700 font-medium group-hover:gap-2 transition-all">
+                    Find now <ChevronRight className="w-4 h-4 ml-1" />
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
         </div>
       </section>
@@ -248,16 +311,14 @@ export default function LandingPage() {
                     <ClipboardCheck className="w-8 h-8 text-white" />
                   </div>
                   <CardTitle className="text-2xl">Health Assessment</CardTitle>
-                  <CardDescription>6 steps • 5 minutes • Free</CardDescription>
+                  <CardDescription>4 steps • 5 minutes • Free</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {[
                     { step: 1, title: "Basic Information", desc: "Age, gender, activity" },
                     { step: 2, title: "Body Measurements", desc: "Height, weight, vitals" },
                     { step: 3, title: "Risk Factors", desc: "CBAC questionnaire" },
-                    { step: 4, title: "Lifestyle Check", desc: "Habits & guidance" },
-                    { step: 5, title: "Symptom Screening", desc: "Early warning signs" },
-                    { step: 6, title: "Your Summary", desc: "Results & advice" },
+                    { step: 4, title: "Summary & Guidance", desc: "Results, tips & advice" },
                   ].map((item) => (
                     <div key={item.step} className="flex items-center gap-4 p-3 rounded-lg bg-slate-50">
                       <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-semibold text-sm">

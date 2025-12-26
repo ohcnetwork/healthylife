@@ -67,7 +67,7 @@ It does not provide treatment advice.
   };
 
   return (
-    <AppShell currentStep={2} totalSteps={6}>
+    <AppShell currentStep={2} totalSteps={4}>
       <div className="space-y-6">
         {/* Main Advisory Alert */}
         <Alert className="bg-rose-50 border-rose-200">
@@ -189,6 +189,4 @@ It does not provide treatment advice.
     </AppShell>
   );
 }
-
-
 

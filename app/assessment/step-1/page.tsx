@@ -61,7 +61,7 @@ export default function Step1Page() {
   };
 
   return (
-    <AppShell currentStep={1} totalSteps={6}>
+    <AppShell currentStep={1} totalSteps={4}>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">About you</h1>
